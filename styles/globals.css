@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fundo animado suave (leve e moderno) */
+.bg-animated {
+  background: linear-gradient(-45deg, #7c3aed, #2563eb, #06b6d4, #10b981);
+  background-size: 400% 400%;
+  animation: gradientBG 18s ease infinite;
+}
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Melhor legibilidade em sobreposições claras/escuro */
+::selection {
+  background: rgba(255, 255, 255, 0.35);
+  color: #111;
+}

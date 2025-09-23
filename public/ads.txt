@@ -1,0 +1,3 @@
+google.com, pub-XXXX, DIRECT, f08c47fec0942fa0
+
+# Substitua pub-XXXX pelo seu Publisher ID do AdSense.
