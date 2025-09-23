@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
+    "seed": "node --env-file=.env.local scripts/seed.js",
     "lint": "eslint"
   },
   "dependencies": {

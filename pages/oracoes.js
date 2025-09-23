@@ -35,10 +35,16 @@ export default function Oracoes({ prayers }) {
 
 export async function getServerSideProps() {
   await dbConnect();
-  const docs = await Prayer.find({ category: "oração" }).lean();
+  const docs = await Prayer.find({ category: "oração" })
+    .sort({ createdAt: -1 })
+    .lean();
+
   const prayers = docs.map((d) => ({
     ...d,
     _id: d._id.toString(),
+    createdAt: d.createdAt ? d.createdAt.toISOString() : null,
+    updatedAt: d.updatedAt ? d.updatedAt.toISOString() : null,
   }));
+
   return { props: { prayers } };
 }
