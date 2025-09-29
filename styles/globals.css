@@ -1,27 +1,502 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* Fundo animado suave (leve e moderno) */
-.bg-animated {
-  background: linear-gradient(-45deg, #7c3aed, #2563eb, #06b6d4, #10b981);
-  background-size: 400% 400%;
-  animation: gradientBG 18s ease infinite;
+/* =======================
+   BASE / TOKENS
+======================= */
+@layer base {
+  :root {
+    /* Cores */
+    --bg-1: #0b1020;
+    --bg-2: #141a33;
+    --bg-3: #1a1f3a;
+    --ink: #e8ecff;
+    --muted: #b7c2e0;
+    --accent: #8b5cf6;
+    --accent-2: #22d3ee;
+    --stroke: rgba(255, 255, 255, 0.12);
+
+    /* Altura fluida da navbar (mobile → desktop) */
+    --nav-h: clamp(56px, 6.5svh, 88px);
+  }
+  @media (min-width: 768px) {
+    :root {
+      --nav-h: clamp(64px, 6svh, 96px);
+    }
+  }
+
+  html,
+  body {
+    @apply h-full antialiased;
+    color: var(--ink);
+    background: #0a0f1c;
+  }
+
+  /* Offset global p/ navbar fixa + safe areas iOS */
+  body {
+    padding-top: var(--nav-h);
+    min-height: 100svh; /* lida com barras móveis */
+    min-height: 100dvh;
+    padding-left: max(env(safe-area-inset-left, 0px), 0px);
+    padding-right: max(env(safe-area-inset-right, 0px), 0px);
+  }
+
+  ::selection {
+    background: rgba(139, 92, 246, 0.35);
+    color: #fff;
+  }
+
+  a {
+    @apply underline decoration-2 underline-offset-4 transition-colors;
+    color: #9be8f5;
+  }
+  a:hover {
+    color: #e9d5ff;
+  }
 }
-@keyframes gradientBG {
+
+/* =======================
+   COMPONENTS / LAYOUT
+======================= */
+@layer components {
+  .page {
+    @apply relative;
+    min-height: 100svh;
+    min-height: 100dvh;
+  }
+
+  /* Container com gutter fluido */
+  .container-max {
+    margin-inline: auto;
+    max-width: 1280px; /* ~7xl */
+    padding-inline: clamp(16px, 4vw, 28px);
+  }
+
+  /* Seções com respiro fluido */
+  .section {
+    padding-block: clamp(28px, 5.5vw, 64px);
+  }
+
+  .section-head {
+    @apply flex items-center justify-between gap-4 mb-6;
+  }
+  .section-title {
+    @apply font-extrabold tracking-tight;
+    font-size: clamp(22px, 3.4vw, 32px);
+    letter-spacing: -0.02em;
+  }
+
+  .link-muted {
+    @apply text-white/70 no-underline hover:text-white;
+  }
+
+  /* ---------- Botões ---------- */
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-xl font-semibold transition border;
+    border-color: rgba(255, 255, 255, 0.22);
+    padding: clamp(10px, 1.8vw, 12px) clamp(16px, 2.6vw, 20px);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0.06)
+    );
+    box-shadow: 0 10px 26px -18px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    color: #fff;
+    text-decoration: none;
+  }
+  .btn:hover {
+    @apply scale-[1.01];
+    background: rgba(255, 255, 255, 0.18);
+  }
+  .btn-primary {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-color: transparent;
+  }
+  .btn-ghost {
+    @apply bg-white/10 hover:bg-white/20;
+  }
+
+  /* ---------- Pílulas (features) ---------- */
+  .feature-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+    gap: clamp(8px, 2vw, 12px);
+    font-size: clamp(11px, 1.6vw, 14px);
+  }
+  .feature-pill {
+    @apply rounded-xl border text-white/80;
+    padding: clamp(8px, 1.6vw, 10px) clamp(10px, 2vw, 12px);
+    border-color: rgba(255, 255, 255, 0.12);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.03)
+    );
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    @apply relative flex items-center;
+    min-height: clamp(62svh, 74svh, 88svh);
+  }
+  .hero__bg {
+    @apply absolute inset-0 -z-10;
+    background: radial-gradient(
+        70% 70% at 15% 20%,
+        rgba(124, 58, 237, 0.28),
+        transparent 60%
+      ),
+      radial-gradient(
+        60% 60% at 85% 25%,
+        rgba(34, 211, 238, 0.22),
+        transparent 60%
+      ),
+      linear-gradient(180deg, #0b1020 0%, #0b1020 40%, #0b1020 100%);
+  }
+  .hero__inner {
+    width: 100%;
+    padding-top: clamp(48px, 8vw, 96px);
+  }
+
+  .hero__card {
+    @apply mx-auto rounded-2xl border backdrop-blur-md;
+    max-width: min(820px, 92vw);
+    padding: clamp(18px, 3.2vw, 32px);
+    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.35);
+    box-shadow: 0 10px 40px -12px rgba(0, 0, 0, 0.75),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+  .hero__chip {
+    @apply inline-flex items-center gap-2 rounded-full ring-1;
+    padding: clamp(6px, 1.4vw, 8px) clamp(10px, 2vw, 12px);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    ring-color: rgba(255, 255, 255, 0.15);
+  }
+  .hero__title {
+    @apply mt-4 font-extrabold tracking-tight;
+    font-size: clamp(28px, 6.2vw, 44px);
+    letter-spacing: -0.02em;
+  }
+  .hero__subtitle {
+    @apply mt-2 text-white/85;
+    font-size: clamp(14px, 1.8vw, 18px);
+  }
+  .hero__actions {
+    @apply mt-6 flex flex-wrap gap-3;
+  }
+
+  /* ---------- CARD PREMIUM (Coleções da home) ---------- */
+  .collection-card {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    gap: clamp(14px, 2.2vw, 18px);
+    padding: clamp(16px, 2.4vw, 22px);
+    border-radius: 18px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.03)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 12px 28px -18px rgba(0, 0, 0, 0.8);
+    transition: transform 0.25s ease, box-shadow 0.25s ease,
+      border-color 0.25s ease, background 0.25s ease;
+  }
+  .collection-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    pointer-events: none;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.22),
+      rgba(255, 255, 255, 0.06) 28%,
+      color-mix(in oklab, var(--sw1, #7c3aed) 36%, transparent) 58%,
+      color-mix(in oklab, var(--sw2, #22d3ee) 36%, transparent)
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.9;
+  }
+  .cc-glow {
+    position: absolute;
+    inset: -20% -20% auto auto;
+    width: 55%;
+    height: 140%;
+    background: radial-gradient(
+        45% 60% at 70% 30%,
+        color-mix(in oklab, var(--sw1, #7c3aed) 75%, transparent),
+        transparent 60%
+      ),
+      radial-gradient(
+        50% 60% at 20% 70%,
+        color-mix(in oklab, var(--sw2, #22d3ee) 65%, transparent),
+        transparent 60%
+      );
+    filter: blur(26px);
+    opacity: 0.45;
+    z-index: -1;
+    transform: rotate(6deg);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .collection-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.22);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.04)
+    );
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 26px 58px -24px rgba(0, 0, 0, 0.9);
+  }
+  .collection-card:hover .cc-glow {
+    opacity: 0.65;
+    transform: rotate(2deg) scale(1.02);
+  }
+
+  .cc-head {
+    @apply flex items-center gap-4;
+  }
+  .cc-icon {
+    @apply inline-grid place-items-center;
+    width: clamp(40px, 5vw, 46px);
+    height: clamp(40px, 5vw, 46px);
+    border-radius: 14px;
+    background: linear-gradient(
+      135deg,
+      var(--sw1, #7c3aed),
+      var(--sw2, #22d3ee)
+    );
+    box-shadow: 0 10px 24px -12px color-mix(in oklab, var(--sw2, #22d3ee) 60%, transparent);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  .cc-icon svg {
+    width: 22px;
+    height: 22px;
+    color: #fff;
+  }
+
+  .cc-title {
+    @apply grid gap-1;
+  }
+  .cc-h3 {
+    @apply font-extrabold;
+    font-size: clamp(18px, 2.1vw, 22px);
+    letter-spacing: -0.02em;
+  }
+  .cc-sub {
+    @apply text-white/85 text-sm;
+  }
+
+  .cc-foot {
+    @apply flex items-center justify-between gap-3 pt-3;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  }
+  .cc-meta {
+    @apply text-white/70 text-xs;
+  }
+  .cc-cta {
+    @apply inline-flex items-center gap-2 font-bold no-underline;
+    padding: clamp(10px, 1.8vw, 12px) clamp(14px, 2.2vw, 16px);
+    border-radius: 14px;
+    color: #fff;
+    background: linear-gradient(
+      90deg,
+      var(--sw1, #7c3aed),
+      var(--sw2, #22d3ee)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 26px -16px color-mix(in oklab, var(--sw1, #7c3aed) 60%, transparent);
+    transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+  }
+  .cc-cta:hover {
+    transform: translateY(-1px);
+    filter: saturate(1.05);
+  }
+
+  /* Subnav “sticky” opcional */
+  .subnav.sticky {
+    position: sticky;
+    top: calc(var(--nav-h) + 8px);
+    z-index: 30;
+  }
+}
+
+/* =======================
+   ANIMAÇÕES
+======================= */
+@keyframes mesh {
   0% {
-    background-position: 0% 50%;
+    background-position: 0% 50%, 20% 30%, 80% 70%;
   }
   50% {
-    background-position: 100% 50%;
+    background-position: 100% 50%, 80% 30%, 20% 70%;
   }
   100% {
-    background-position: 0% 50%;
+    background-position: 0% 50%, 20% 30%, 80% 70%;
   }
 }
 
-/* Melhor legibilidade em sobreposições claras/escuro */
-::selection {
-  background: rgba(255, 255, 255, 0.35);
-  color: #111;
+/* =======================
+   UTILITIES
+======================= */
+@layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Imagens fluídas */
+  .img-fluid {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Aspect ratios (se não usar @tailwind/aspect) */
+  .ratio-16x9 {
+    aspect-ratio: 16/9;
+  }
+  .ratio-1x1 {
+    aspect-ratio: 1/1;
+  }
+}
+
+/* ===== Coleção de orações (visual premium centralizado) ===== */
+.title-xl {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-size: clamp(28px, 4.6vw, 44px);
+}
+.subtitle {
+  color: rgba(232, 236, 255, 0.9);
+}
+
+.halo {
+  width: 110px;
+  height: 110px;
+  border-radius: 9999px;
+  background: radial-gradient(
+      42% 42% at 50% 50%,
+      rgba(255, 255, 255, 0.18),
+      transparent 60%
+    ),
+    radial-gradient(
+      70% 60% at 50% 60%,
+      color-mix(in oklab, var(--accent) 46%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      60% 50% at 50% 40%,
+      color-mix(in oklab, var(--accent-2) 36%, transparent),
+      transparent 70%
+    );
+  filter: blur(10px);
+  opacity: 0.55;
+}
+
+/* Cartão de oração (base) */
+.prayer-card {
+  position: relative;
+  border-radius: 18px;
+  padding: clamp(16px, 2.2vw, 22px) clamp(14px, 2vw, 20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: radial-gradient(
+      120% 120% at 0% 0%,
+      rgba(139, 92, 246, 0.06),
+      transparent 40%
+    ),
+    radial-gradient(
+      120% 120% at 100% 100%,
+      rgba(34, 211, 238, 0.06),
+      transparent 46%
+    ),
+    rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 22px 55px -28px rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+}
+
+.prayer-ornament {
+  position: absolute;
+  inset: -1px;
+  border-radius: 20px;
+  padding: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.06) 28%,
+    color-mix(in oklab, var(--accent) 34%, transparent) 58%,
+    color-mix(in oklab, var(--accent-2) 34%, transparent)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.9;
+}
+
+.prayer-title {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  font-size: clamp(18px, 2.2vw, 22px);
+  margin-bottom: 0.5rem;
+}
+
+.prayer-text {
+  color: rgba(232, 236, 255, 0.92);
+  line-height: 1.7;
+  font-size: clamp(15px, 1.65vw, 17px);
+}
+
+/* ====== Compactação p/ cards de Orações (match com Salmos/Mantras) ====== */
+
+/* Grade unificada */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: clamp(12px, 2.4vw, 16px);
+}
+
+/* Modificador de densidade (aplicar junto com .prayer-card) */
+.card-compact {
+  padding: clamp(12px, 1.8vw, 16px);
+  border-radius: 14px;
+}
+.card-compact .prayer-title {
+  font-size: clamp(16px, 1.9vw, 18px);
+  margin-bottom: 0.4rem;
+}
+.card-compact .prayer-text {
+  font-size: clamp(14px, 1.55vw, 16px);
+  line-height: 1.6;
+}
+
+/* Cover opcional interno no card (padroniza com outras seções) */
+.card-cover {
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }

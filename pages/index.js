@@ -1,104 +1,190 @@
-import { useEffect, useState } from "react";
+// pages/index.js
 import Head from "next/head";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const mensagens = [
-    "Bem-vindo ao seu portal de orações.",
-    "Encontre paz, força e presença.",
-    "Orações, Salmos e Mantras em um só lugar.",
+    "Orações que acalmam e fortalecem.",
+    "Salmos para guiar o seu dia.",
+    "Mantras para elevar sua vibração.",
   ];
   const [i, setI] = useState(0);
 
   useEffect(() => {
-    const id = setInterval(() => setI((p) => (p + 1) % mensagens.length), 5000);
+    const id = setInterval(() => setI((p) => (p + 1) % mensagens.length), 3200);
     return () => clearInterval(id);
   }, []);
 
-  // AdSense: renderiza bloco ao montar
-  useEffect(() => {
-    try {
-      // eslint-disable-next-line no-undef
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch {}
-  }, []);
-
-  // Newsletter simples (somente email)
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("");
-
-  async function onSubmit(e) {
-    e.preventDefault();
-    setStatus("");
-    try {
-      const res = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      if (res.ok) {
-        setEmail("");
-        setStatus("Obrigado por se inscrever!");
-      } else {
-        const data = await res.json().catch(() => ({}));
-        setStatus(data?.error || "Falha ao inscrever. Tente novamente.");
-      }
-    } catch {
-      setStatus("Erro de rede. Tente novamente.");
-    }
-  }
-
   return (
-    <div className="min-h-screen bg-animated text-white flex items-center justify-center">
+    <>
       <Head>
         <title>Portal de Orações</title>
-        <meta name="description" content="Orações, Salmos e Mantras" />
+        <meta
+          name="description"
+          content="Orações, salmos e mantras — inspiração diária, leitura fluida e sem anúncios invasivos."
+        />
       </Head>
 
-      <main className="w-full max-w-4xl px-6 text-center">
-        <h1 className="text-4xl md:text-6xl font-extrabold drop-shadow-[0_2px_6px_rgba(0,0,0,.4)] transition-all">
-          {mensagens[i]}
-        </h1>
-        <p className="mt-4 text-lg md:text-2xl opacity-90">
-          Role, explore e encontre palavras que elevam a alma.
-        </p>
+      <main className="page">
+        {/* HERO */}
+        <section className="hero">
+          <div className="hero__bg" />
+          <div className="container-max hero__inner">
+            <div className="hero__card">
+              <span className="hero__chip">
+                🌙 Inspiração diária • sem anúncios invasivos
+              </span>
+              <h1 className="hero__title">{mensagens[i]}</h1>
+              <p className="hero__subtitle">
+                Um lugar para respirar, orar e se conectar.
+              </p>
 
-        {/* Bloco de anúncio responsivo */}
-        <div className="my-8">
-          <ins
-            className="adsbygoogle"
-            style={{ display: "block" }}
-            data-ad-client="ca-pub-XXXX"
-            data-ad-slot="YYYY"
-            data-ad-format="auto"
-            data-full-width-responsive="true"
-          />
-        </div>
+              {/* ações: responsivo de verdade */}
+              <div className="hero__actions flex flex-col sm:flex-row gap-2 sm:gap-3">
+                <Link
+                  href="/oracoes"
+                  className="btn btn-primary w-full sm:w-auto justify-center"
+                >
+                  Explorar Orações
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    className="-mr-1"
+                  >
+                    <path fill="currentColor" d="M13 5l7 7-7 7v-4H4v-6h9V5z" />
+                  </svg>
+                </Link>
 
-        {/* Newsletter */}
-        <form
-          onSubmit={onSubmit}
-          className="mx-auto max-w-md bg-white/15 backdrop-blur rounded-xl p-4 md:p-6"
-        >
-          <h2 className="text-xl font-semibold mb-2">Receba novidades</h2>
-          <div className="flex gap-2">
-            <input
-              type="email"
-              required
-              placeholder="Seu e-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 px-4 py-2 rounded-md text-gray-900 placeholder-gray-500 outline-none"
-            />
-            <button
-              type="submit"
-              className="px-4 py-2 rounded-md bg-white text-purple-700 font-semibold hover:opacity-90"
-            >
-              Inscrever
-            </button>
+                <Link
+                  href="/salmos"
+                  className="btn btn-ghost w-full sm:w-auto justify-center"
+                  title="Coleção de salmos selecionados"
+                >
+                  Ver Salmos
+                </Link>
+
+                <Link
+                  href="/mantras"
+                  className="btn btn-ghost w-full sm:w-auto justify-center"
+                  title="Mantras para ouvir/recitar"
+                >
+                  Ouvir/Recitar Mantras
+                </Link>
+              </div>
+            </div>
           </div>
-          {status && <p className="mt-2 text-sm">{status}</p>}
-        </form>
+        </section>
+
+        {/* FEATURES PÍLULAS */}
+        <section className="section">
+          <div className="container-max">
+            <div className="feature-row">
+              <div className="feature-pill">+300 textos curados</div>
+              <div className="feature-pill">Leitura fluida</div>
+              <div className="feature-pill">Sem cadastro obrigatório</div>
+              <div className="feature-pill">Monte o seu guia de orações</div>
+            </div>
+          </div>
+        </section>
+
+        {/* COLEÇÕES */}
+        <section className="section">
+          <div className="container-max">
+            <div className="section-head">
+              <h2 className="section-title">Coleções</h2>
+              <Link href="/oracoes" className="link-muted">
+                Ver tudo →
+              </Link>
+            </div>
+
+            {/* grid elástica: 1 → N colunas automaticamente */}
+            <div
+              className="grid gap-4 sm:gap-5 lg:gap-6"
+              style={{
+                gridTemplateColumns:
+                  "repeat(auto-fit, minmax(min(100%, 240px), 1fr))",
+              }}
+            >
+              {CARDS.map((c) => (
+                <Card key={c.title} {...c} />
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
-    </div>
+    </>
+  );
+}
+
+/* ---------- dados dos cards ---------- */
+const CARDS = [
+  {
+    title: "Orações",
+    desc: "Clássicas e contemporâneas para cada momento.",
+    href: "/oracoes",
+    sw1: "#7c3aed",
+    sw2: "#22d3ee",
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-6 h-6">
+        <path
+          fill="currentColor"
+          d="M12 3a6 6 0 0 1 6 6v2h1a2 2 0 0 1 0 4h-1v6h-2v-6H8v6H6v-6H5a2 2 0 1 1 0-4h1V9a6 6 0 0 1 6-6Z"
+        />
+      </svg>
+    ),
+  },
+  {
+    title: "Salmos",
+    desc: "Versos para ler, meditar e compartilhar.",
+    href: "/salmos",
+    sw1: "#22d3ee",
+    sw2: "#60a5fa",
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-6 h-6">
+        <path
+          fill="currentColor"
+          d="M12 3l7 4v10l-7 4-7-4V7l7-4Zm0 2.2L7 7.5v8.9l5 2.9 5-2.9V7.5l-5-2.3Z"
+        />
+      </svg>
+    ),
+  },
+  {
+    title: "Mantras",
+    desc: "Repetição consciente para elevar sua energia.",
+    href: "/mantras",
+    sw1: "#fb7185",
+    sw2: "#f472b6",
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-6 h-6">
+        <path fill="currentColor" d="M12 4a8 8 0 1 1-8 8h2a6 6 0 1 0 6-6V4Z" />
+      </svg>
+    ),
+  },
+];
+
+/* ---------- componente de card ---------- */
+function Card({ title, desc, href, sw1, sw2, icon }) {
+  return (
+    <article style={{ "--sw1": sw1, "--sw2": sw2 }} className="collection-card">
+      <div className="cc-glow" />
+      <header className="cc-head">
+        <span className="cc-icon">{icon}</span>
+        <div className="cc-title">
+          <h3 className="cc-h3">{title}</h3>
+          <p className="cc-sub">{desc}</p>
+        </div>
+      </header>
+      <footer className="cc-foot">
+        <span className="cc-meta">Atualizado semanalmente</span>
+        <Link href={href} className="cc-cta">
+          Acessar
+          <svg width="16" height="16" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M13 5l7 7-7 7v-4H4v-6h9V5z" />
+          </svg>
+        </Link>
+      </footer>
+    </article>
   );
 }
