@@ -54,15 +54,27 @@ export default function PsalmView({ psalm }) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+/**
+ * Pre‑build individual psalm pages.  All existing salmos are generated at
+ * build time.  Pages fallback to on‑demand generation for slugs not found
+ * during build (useful when new salmos are added).  Revalidation ensures
+ * updated content is picked up hourly.
+ */
+export async function getStaticPaths() {
   await dbConnect();
+  const docs = await Psalm.find({}).select("slug").lean();
+  const paths = docs.map((d) => ({ params: { slug: d.slug } }));
+  return { paths, fallback: "blocking" };
+}
 
+export async function getStaticProps({ params }) {
+  await dbConnect();
   const doc = await Psalm.findOne({ slug: params.slug })
     .select("number title slug excerpt content createdAt updatedAt")
     .lean();
-
-  if (!doc) return { props: { psalm: null } };
-
+  if (!doc) {
+    return { props: { psalm: null }, revalidate: 3600 };
+  }
   const psalm = {
     _id: doc._id.toString(),
     number: doc.number ?? null,
@@ -73,6 +85,5 @@ export async function getServerSideProps({ params }) {
     createdAt: doc.createdAt?.toISOString?.() ?? null,
     updatedAt: doc.updatedAt?.toISOString?.() ?? null,
   };
-
-  return { props: { psalm } };
+  return { props: { psalm }, revalidate: 3600 };
 }

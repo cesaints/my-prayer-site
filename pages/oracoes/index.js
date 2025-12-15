@@ -5,7 +5,9 @@ import Collection from "../../models/Collection";
 import Prayer from "../../models/Prayer";
 import FeaturedCollectionCard from "../../components/FeaturedCollectionCard";
 
-export const dynamic = "force-dynamic";
+// Convert server-side rendering to static generation with incremental revalidation.
+// This improves performance by pre‑building the collections page at build time
+// and revalidating the data on a regular interval.  See `getStaticProps` below.
 
 export default function CollectionsPage({ collections = [], error = "" }) {
   return (
@@ -54,17 +56,25 @@ export default function CollectionsPage({ collections = [], error = "" }) {
   );
 }
 
-export async function getServerSideProps() {
+/**
+ * Build the collections list statically. The data is fetched at build time
+ * and cached. Whenever a request comes in after the `revalidate` period
+ * (here 1 hour), Next.js will regenerate the page in the background.
+ */
+export async function getStaticProps() {
   try {
     await dbConnect();
 
-    const collections = await Collection.find({}).lean();
-    const counts = await Prayer.aggregate([
-      { $group: { _id: "$collection", total: { $sum: 1 } } },
+    // Fetch all collections and prayer counts concurrently
+    const [collections, counts] = await Promise.all([
+      Collection.find({}).lean(),
+      Prayer.aggregate([{ $group: { _id: "$collection", total: { $sum: 1 } } }]),
     ]);
     const mapCount = new Map(counts.map((c) => [String(c._id), c.total]));
 
     const data = collections
+      // Não exibir a coleção "oracoes-outras-tradicoes" caso ela ainda exista no banco.
+      .filter((c) => c.slug !== "oracoes-outras-tradicoes")
       .map((c) => ({
         slug: c.slug,
         name: c.name,
@@ -74,11 +84,12 @@ export async function getServerSideProps() {
       }))
       .sort((a, b) => b.count - a.count);
 
-    return { props: { collections: data } };
+    return { props: { collections: data }, revalidate: 3600 };
   } catch (e) {
-    console.error("[/oracoes] gSSP error:", e);
+    console.error("[/oracoes] static generation error:", e);
     return {
       props: { collections: [], error: e.message || "Erro inesperado" },
+      revalidate: 3600,
     };
   }
 }

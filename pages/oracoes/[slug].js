@@ -5,7 +5,8 @@ import dbConnect from "../../lib/dbConnect";
 import Collection from "../../models/Collection";
 import Prayer from "../../models/Prayer";
 
-export const dynamic = "force-dynamic";
+// Use static generation for better performance.  See getStaticProps and
+// getStaticPaths below for implementation details.
 
 export default function CollectionView({ collection, prayers }) {
   if (!collection) {
@@ -74,20 +75,25 @@ export default function CollectionView({ collection, prayers }) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getStaticPaths() {
   await dbConnect();
+  const cols = await Collection.find({}).select("slug").lean();
+  const paths = cols.map((c) => ({ params: { slug: c.slug } }));
+  return { paths, fallback: "blocking" };
+}
 
+export async function getStaticProps({ params }) {
+  await dbConnect();
   const colDoc = await Collection.findOne({ slug: params.slug })
     .select("name slug description createdAt updatedAt")
     .lean();
-
-  if (!colDoc) return { props: { collection: null, prayers: [] } };
-
+  if (!colDoc) {
+    return { props: { collection: null, prayers: [] }, revalidate: 3600 };
+  }
   const docs = await Prayer.find({ collection: colDoc._id })
     .select("title content collection createdAt updatedAt")
     .sort({ createdAt: -1 })
     .lean();
-
   const collection = {
     _id: colDoc._id.toString(),
     name: colDoc.name || "",
@@ -96,7 +102,6 @@ export async function getServerSideProps({ params }) {
     createdAt: colDoc.createdAt?.toISOString?.() ?? null,
     updatedAt: colDoc.updatedAt?.toISOString?.() ?? null,
   };
-
   const prayers = docs.map((d) => ({
     _id: d._id.toString(),
     title: d.title || "",
@@ -105,6 +110,5 @@ export async function getServerSideProps({ params }) {
     createdAt: d.createdAt?.toISOString?.() ?? null,
     updatedAt: d.updatedAt?.toISOString?.() ?? null,
   }));
-
-  return { props: { collection, prayers } };
+  return { props: { collection, prayers }, revalidate: 3600 };
 }

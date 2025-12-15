@@ -89,17 +89,29 @@ export default function MantraView({ mantra }) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+/**
+ * Pre‑build each mantra page.  Next.js will generate the HTML for every
+ * existing mantra at build time, falling back to on‑demand generation for
+ * any new slugs encountered after deployment.  Each page is revalidated
+ * hourly to pick up updates from the database.
+ */
+export async function getStaticPaths() {
   await dbConnect();
+  const docs = await Mantra.find({}).select("slug").lean();
+  const paths = docs.map((d) => ({ params: { slug: d.slug } }));
+  return { paths, fallback: "blocking" };
+}
 
+export async function getStaticProps({ params }) {
+  await dbConnect();
   const doc = await Mantra.findOne({ slug: params.slug })
     .select(
       "title slug excerpt script translit meaning audioUrl reps createdAt updatedAt"
     )
     .lean();
-
-  if (!doc) return { props: { mantra: null } };
-
+  if (!doc) {
+    return { props: { mantra: null }, revalidate: 3600 };
+  }
   const mantra = {
     _id: doc._id.toString(),
     title: doc.title || "",
@@ -113,6 +125,5 @@ export async function getServerSideProps({ params }) {
     createdAt: doc.createdAt?.toISOString?.() ?? null,
     updatedAt: doc.updatedAt?.toISOString?.() ?? null,
   };
-
-  return { props: { mantra } };
+  return { props: { mantra }, revalidate: 3600 };
 }

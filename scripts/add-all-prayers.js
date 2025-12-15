@@ -59,14 +59,8 @@ const COLLECTIONS = [
     accent1: "#a78bfa",
     accent2: "#22d3ee",
   },
-  {
-    name: "Orações de Outras Tradições",
-    slug: "oracoes-outras-tradicoes",
-    description: "Preces, afirmações e pedidos espirituais não católicos.",
-    cover: "/covers/outras-tradicoes.png",
-    accent1: "#f59e0b",
-    accent2: "#10b981",
-  },
+  // A coleção "Orações de Outras Tradições" foi removida do portal.  Não
+  // defina mais esta coleção aqui para que ela não seja criada no banco.
   {
     name: "Orações de Libertação",
     slug: "oracoes-de-libertacao",
@@ -157,35 +151,35 @@ const PRAYERS = [
     collectionSlug: "oracoes-da-manha",
     tags: ["manhã", "bíblica", "laudes"],
     content:
-      "Bendito seja o Senhor, Deus de Israel, porque visitou e redimiu o seu povo; ... para iluminar os que jazem nas trevas e na sombra da morte, e dirigir os nossos passos no caminho da paz. Amém.",
+      "Bendito seja o Senhor, Deus de Israel, porque visitou e redimiu o seu povo; e nos suscitou um poderoso Salvador na casa de Davi, seu servo, como anunciara desde os tempos antigos, pelos seus santos profetas, para nos salvar dos nossos inimigos e das mãos de todos os que nos odeiam. Assim exerce a sua misericórdia com nossos pais, recordando a sua santa aliança e o juramento que fez a nosso pai Abraão: conceder-nos que, livres do temor e libertos das mãos de nossos inimigos, o sirvamos em santidade e justiça, em sua presença todos os dias de nossa vida. E tu, menino, serás chamado profeta do Altíssimo, porque irás à frente do Senhor para preparar-lhe os caminhos, para dar ao seu povo conhecer a salvação, pelo perdão dos pecados, graças ao misericordioso coração do nosso Deus, que das alturas nos visita como sol nascente, para iluminar os que jazem nas trevas e na sombra da morte e dirigir os nossos passos no caminho da paz. Amém.",
   },
   {
     title: "Oração ao Espírito Santo (Santo Agostinho)",
     collectionSlug: "oracoes-da-manha",
     tags: ["manhã", "espírito-santo", "santidade"],
     content:
-      "Respirai em mim, Espírito Santo, para que todos os meus pensamentos sejam santos. Movei-me, Espírito Santo, para que também o meu trabalho seja santo. Atraí o meu coração, Espírito Santo... Guardai-me, Espírito Santo, para que eu jamais perca o que é santo. Amém.",
+      "Respirai em mim, Espírito Santo, para que todos os meus pensamentos sejam santos. Impeli-me, Espírito Santo, para que também o meu trabalho seja santo. Atraí o meu coração, Espírito Santo, para que eu ame somente o que é santo. Fortificai-me, Espírito Santo, para que eu proteja o que é santo. Guardai-me, Espírito Santo, para que eu jamais perca o que é santo. Amém.",
   },
   {
     title: "Oferenda da Manhã (Santa Teresinha do Menino Jesus)",
     collectionSlug: "oracoes-da-manha",
     tags: ["manhã", "oferecimento", "santa-teresinha"],
     content:
-      "Ó meu Deus, ofereço-Te todas as minhas ações deste dia pelas intenções e pela glória do Sagrado Coração de Jesus... para que possamos um dia estar contigo no Céu por toda a eternidade. Amém.",
+      "Ó meu Deus, ofereço-vos todas as ações deste dia pelas intenções e para a glória do Sagrado Coração de Jesus. Uno-as aos méritos de Sua vida, paixão e morte e as ofereço por amor ao Sagrado Coração e ao Imaculado Coração de Maria, para que Ele reine na terra e triunfe em cada coração. Concedei-me a graça de cumprir bem os meus deveres e de aceitar com alegria todas as contrariedades por amor de Vós. Fazei que possamos um dia estar convosco no Céu por toda a eternidade. Amém.",
   },
   {
     title: "Senhor, no silêncio deste dia…",
     collectionSlug: "oracoes-da-manha",
     tags: ["manhã", "virtudes", "paz"],
     content:
-      "Senhor, no silêncio deste dia que amanhece, venho pedir-Te força, sabedoria e paz... Reveste-me de Tua beleza, Senhor, e que no decurso deste dia eu Te revele a todos. Amém.",
+      "Senhor, no silêncio deste dia que amanhece, venho pedir-Te paz, sabedoria e força. Quero olhar hoje o mundo com olhos cheios de amor; ser paciente, compreensivo, manso e prudente; ver além das aparências teus filhos, como Tu mesmo os vês, e assim não ver senão o bem em cada um. Fecha meus ouvidos a toda calúnia, guarda minha língua de toda maldade, e que só de bênçãos se encha o meu espírito. Que eu seja tão bondoso e alegre que todos quantos se aproximarem de mim sintam a tua presença. Reveste-me da tua beleza, Senhor, e que no decurso deste dia eu Te revele a todos. Amém.",
   },
   {
     title: "Oração Matinal (tradição oriental/caldeia)",
     collectionSlug: "oracoes-da-manha",
     tags: ["manhã", "louvor", "confiança"],
     content:
-      "Ao amanhecer, louvamos-Te, Senhor, porque salvaste toda a tua criação... ampara os fracos e guarda os fortes; sara os doentes e perdoa os pecados de toda a humanidade. Amém.",
+      "Ao amanhecer, louvamos-Te, Senhor, porque salvaste toda a tua criação e nos dás este novo dia. Dá força aos fracos, guarda os fortes, sara os doentes e perdoa os pecados de toda a humanidade. Ilumina nossas mentes com a tua luz, inflama nossos corações com teu amor e guia nossos passos no caminho da paz. Amém.",
   },
   {
     title: "Acorda-me para a Tua Vontade",
@@ -245,21 +239,21 @@ const PRAYERS = [
     collectionSlug: "oracoes-da-tarde",
     tags: ["tarde", "eucarística"],
     content:
-      "Alma de Cristo, santificai-me. Corpo de Cristo, salvai-me... para que vos louve com os vossos santos, por todos os séculos dos séculos. Amém.",
+      "Alma de Cristo, santificai-me. Corpo de Cristo, salvai-me. Sangue de Cristo, inebriai-me. Água do lado de Cristo, lavai-me. Paixão de Cristo, confortai-me. Ó bom Jesus, ouvi-me. Dentro das vossas chagas, escondei-me. Não permitais que eu me separe de Vós. Do inimigo maligno defendei-me. Na hora da minha morte, chamai-me. Mandai-me ir para Vós, para que Vos louve com os vossos Santos pelos séculos dos séculos. Amém.",
   },
   {
     title: "Veni Creator Spiritus (Vinde, Criador Espírito)",
     collectionSlug: "oracoes-da-tarde",
     tags: ["tarde", "espírito-santo"],
     content:
-      "Vinde, Espírito Criador, visitai as almas dos vossos fiéis... e unção espiritual. Amém.",
+      "Vinde, Espírito Criador, visitai as almas dos vossos fiéis; enchei de graça celestial os corações que criastes. Vós, chamado Consolador, dom do Deus Altíssimo, fonte viva, fogo, caridade e unção espiritual, sois o doador dos sete dons e o poder na mão do Pai, por Ele prometido a nós. A nossa mente iluminai, os corações enchei de amor e nossa fraqueza encorajai com a vossa força eterna. Afastai de nós o inimigo e concedei-nos a vossa paz; com a vossa graça, evitaremos todo mal. Ao Pai e ao Filho Salvador por vós possamos conhecer, pois procedeis do Seu amor; fazei-nos sempre firmes crer. Amém.",
   },
   {
     title: "Regina Caeli (tempo pascal)",
     collectionSlug: "oracoes-da-tarde",
     tags: ["tarde", "tempo-pascal", "mariana"],
     content:
-      "Alegrai-vos, Rainha do céu, aleluia... Porque o Senhor ressuscitou verdadeiramente, aleluia. Amém.",
+      "Rainha dos céus, alegrai-vos. Aleluia! Porque Aquele que merecestes trazer em vosso seio, aleluia, ressuscitou como disse. Aleluia! Rogai por nós a Deus. Aleluia! Alegrai-vos e exultai, ó Virgem Maria. Aleluia! Porque o Senhor ressuscitou verdadeiramente. Aleluia! Oremos: Ó Deus, que enchestes o mundo de alegria com a ressurreição do vosso Filho, nosso Senhor Jesus Cristo, concedei, nós vos pedimos, que pela intercessão da Virgem Maria, sua Mãe, alcancemos as alegrias da vida eterna. Por Cristo, Senhor nosso. Amém.",
   },
   {
     title: "Terço da Misericórdia (estrutura das 15h)",
@@ -284,14 +278,14 @@ Conclusão: “Jesus, eu confio em Vós!”`,
     collectionSlug: "oracoes-da-tarde",
     tags: ["tarde", "espírito-santo", "sequência"],
     content:
-      "Vinde, Espírito Santo... Dai-lhes o mérito da virtude, o bom êxito da graça, o dom da alegria eterna. Amém.",
+      "Vinde, ó Santo Espírito, e enviai do Céu um raio de vossa luz. Vinde, Pai dos pobres, vinde, dispensador dos dons, vinde, luz dos corações. Consolador por excelência, doce hóspede da alma, nosso doce refrigério! No trabalho sois repouso, no ardor sois calma, no pranto, consolo. Ó luz beatíssima, penetrai até o fundo do coração dos que vos são fiéis. Sem vossa graça nada há no homem, nada que não lhe seja nocivo. Lavai o que é impuro, fecundai o que é estéril, ao que está ferido, curai. Dobrai o que é rígido, aquecei o que é frio, e o que se extraviou, guiai. Dai aos que vos são fiéis e em vós confiam os sete dons sagrados. Dai-lhes o mérito da virtude, a salvação no termo da vida e a eterna felicidade. Amém. Aleluia.",
   },
   {
     title: "Bênção do Almoço (antes da refeição)",
     collectionSlug: "oracoes-da-tarde",
     tags: ["tarde", "refeição", "bênção"],
     content:
-      "Abençoai, Senhor, a nós e a estes alimentos que por vossa bondade vamos tomar... Por Cristo, Nosso Senhor. Amém.",
+      "Abençoai, Senhor, a nós e a estes alimentos que, por vossa bondade, vamos tomar. Dai pão a quem tem fome e sede de justiça a quem tem pão. Que jamais falte o necessário em nossa casa e que saibamos partilhar com quem precisa. Por Cristo, nosso Senhor. Amém.",
   },
   {
     title: "Ação de Graças após a Refeição",
@@ -305,7 +299,7 @@ Conclusão: “Jesus, eu confio em Vós!”`,
     collectionSlug: "oracoes-da-tarde",
     tags: ["tarde", "espírito-santo", "santificação"],
     content:
-      "Ó Espírito Santo, alma da minha alma, eu vos adoro... Fazei-me somente conhecer a vossa vontade. Amém.",
+      "Ó Espírito Santo, alma da minha alma, eu vos adoro. Iluminai-me, guiai-me, fortalecei-me, consolai-me. Dizei-me o que devo fazer, dai-me as vossas ordens. Prometo submeter-me a tudo o que desejardes de mim e a aceitar tudo o que permitirdes que me aconteça. Fazei-me somente conhecer a vossa vontade. Amém.",
   },
   {
     title: "Oração ao Preciosíssimo Sangue de Jesus (oferecimento)",
@@ -319,21 +313,21 @@ Conclusão: “Jesus, eu confio em Vós!”`,
     collectionSlug: "oracoes-da-tarde",
     tags: ["tarde", "trabalho", "São José"],
     content:
-      "Glorioso São José, modelo de todos os que se dedicam ao trabalho... para a maior glória de Deus e o bem das almas. Amém.",
+      "Glorioso São José, modelo de todos os que se dedicam ao trabalho, obtende-me a graça de trabalhar com espírito de penitência e de cumprir com paciência e amor todos os meus deveres. Livrai-me de todo orgulho e egoísmo; afastai de mim o desejo de ser notado e o repúdio ao trabalho humilde. Alcançai-me um trabalho fecundo, santo e em conformidade com a vontade de Deus, para a maior glória de Deus e o bem das almas. Amém.",
   },
   {
     title: "Ato de Confiança e Entrega (Pe. Dolindo)",
     collectionSlug: "oracoes-da-tarde",
     tags: ["tarde", "providência", "confiança"],
     content:
-      "Jesus, eu me abandono em Vós, cuidai de tudo! Tirai de mim o medo do futuro... Eu confio e espero: cuidai Vós. Amém.",
+      "Jesus, eu me abandono em Vós, cuidai de tudo! Tirai de mim o medo do futuro, do passado e do presente. Abandono todas as minhas preocupações nos vossos braços de amor. Confio em vossa providência e espero no vosso cuidado: cuidai Vós de tudo. Amém.",
   },
   {
     title: "Magnificat (Cântico de Maria)",
     collectionSlug: "oracoes-da-tarde",
     tags: ["tarde", "bíblica", "vésperas"],
     content:
-      "A minha alma engrandece o Senhor e meu espírito exulta em Deus, meu Salvador... conforme prometera a nossos pais, em favor de Abraão e de sua descendência, para sempre. Amém.",
+      "A minha alma engrandece o Senhor e meu espírito exulta em Deus, meu Salvador, porque olhou para a humildade de sua serva. Doravante todas as gerações me chamarão bem-aventurada, porque o Todo-Poderoso fez grandes coisas em meu favor. Santo é o seu nome, e a sua misericórdia se estende de geração em geração sobre os que o temem. Ele manifestou o poder do seu braço: dispersou os soberbos de coração, derrubou do trono os poderosos e exaltou os humildes. Encheu de bens os famintos e despediu os ricos de mãos vazias. Socorreu Israel, seu servo, lembrado de sua misericórdia, conforme prometera a nossos pais, em favor de Abraão e de sua descendência, para sempre. Amém.",
   },
   {
     title: "Oração a Nossa Senhora do Perpétuo Socorro",
@@ -386,21 +380,21 @@ Conclusão: “Jesus, eu confio em Vós!”`,
     collectionSlug: "oracoes-da-noite",
     tags: ["noite", "mariana"],
     content:
-      "Salve, Rainha, Mãe de misericórdia, vida, doçura e esperança nossa, salve!... Rogai por nós, santa Mãe de Deus, para que sejamos dignos das promessas de Cristo. Amém.",
+      "Salve, Rainha, Mãe de misericórdia, vida, doçura e esperança nossa, salve! A vós bradamos, degredados filhos de Eva; a vós suspiramos, gemendo e chorando neste vale de lágrimas. Eia, pois, Advogada nossa, esses vossos olhos misericordiosos a nós volvei; e, depois deste desterro, mostrai-nos Jesus, bendito fruto do vosso ventre. Ó clemente, ó piedosa, ó doce sempre Virgem Maria! Rogai por nós, santa Mãe de Deus, para que sejamos dignos das promessas de Cristo. Amém.",
   },
   {
     title: "Ato de Contrição",
     collectionSlug: "oracoes-da-noite",
     tags: ["noite", "exame-de-consciência"],
     content:
-      "Meu Deus, porque sois infinitamente bom, tenho profundo pesar de Vos ter ofendido. Detesto todos os meus pecados e proponho firmemente, com a vossa graça, não mais pecar... Amém.",
+      "Meu Deus, porque sois infinitamente bom, tenho profundo pesar de Vos ter ofendido. Detesto todos os meus pecados porque temo a perda do céu e as dores do inferno, mas, sobretudo, porque Vos ofendi, que sois tão bom e amável. Proponho firmemente, com o auxílio da vossa graça, emendar-me e fugir das ocasiões de pecado. Amém.",
   },
   {
     title: "Cântico de Simeão (Nunc Dimittis)",
     collectionSlug: "oracoes-da-noite",
     tags: ["noite", "bíblica", "completas"],
     content:
-      "Agora, Senhor, podeis despedir em paz o vosso servo... luz para iluminar as nações e glória de Israel, vosso povo. Amém.",
+      "Agora, Senhor, podeis deixar o vosso servo ir em paz, segundo a vossa palavra, porque os meus olhos viram a vossa salvação, que preparastes diante de todos os povos: luz para iluminar as nações e glória de Israel, vosso povo. Amém.",
   },
   {
     title: "Visita, Senhor, esta casa (Oração de Completas)",
@@ -414,7 +408,7 @@ Conclusão: “Jesus, eu confio em Vós!”`,
     collectionSlug: "oracoes-da-noite",
     tags: ["noite", "arrependimento", "penitencial"],
     content:
-      "Eu confesso a Deus todo-poderoso e a vós, irmãos e irmãs, que pequei muitas vezes por pensamentos e palavras, atos e omissões, por minha culpa, minha tão grande culpa. E peço à Virgem Maria, aos Anjos e Santos, e a vós, irmãos e irmãs, que rogueis por mim a Deus, Nosso Senhor",
+      "Eu confesso a Deus todo-poderoso e a vós, irmãos e irmãs, que pequei muitas vezes por pensamentos e palavras, atos e omissões, por minha culpa, minha tão grande culpa. Por isso peço à bem-aventurada sempre Virgem Maria, aos anjos, a São Miguel, a São João Batista, aos apóstolos São Pedro e São Paulo e a todos os santos, e a vós, irmãos e irmãs, que rogueis por mim a Deus, nosso Senhor. Amém.",
   },
   {
     title: "Em vossas mãos entrego o meu espírito",
@@ -435,14 +429,14 @@ Conclusão: “Jesus, eu confio em Vós!”`,
     collectionSlug: "oracoes-da-noite",
     tags: ["noite", "mariana", "antífona"],
     content:
-      "Ave, Rainha dos Céus, ave, Senhora dos Anjos; porta e raiz da nossa salvação... roga a Cristo por nós.",
+      "Ave, Rainha dos Céus, ave, Senhora dos Anjos; porta e raiz da nossa salvação, levai-nos a Jesus. Alegrai-vos, ó Virgem gloriosa, bela entre todas; salve, ó toda santa, rogai por nós a Cristo. Amém.",
   },
   {
     title: "Boa noite, meu Jesus",
     collectionSlug: "oracoes-da-noite",
     tags: ["noite", "devoção-popular", "infantil"],
     content:
-      "Boa noite, meu Jesus. A Ti entrego o meu coração. Abençoa minha família, guarda meu descanso... Que eu acorde disposto a fazer a tua vontade. Amém.",
+      "Boa noite, meu Jesus. A Ti entrego o meu coração. Abençoa minha família e guarda meu descanso. Livra-me de todo mal e concede-me um sono tranquilo, para que eu acorde disposto a fazer a tua vontade. Amém.",
   },
   {
     title: "Agradecimento pelo Dia",
@@ -1443,7 +1437,12 @@ async function run() {
   let created = 0,
     updated = 0;
 
-  for (const p of PRAYERS) {
+  // Ignore todas as orações da categoria "outras tradições" para que essas
+  // entradas não sejam inseridas ou atualizadas no banco de dados.
+  const list = PRAYERS.filter(
+    (p) => p.collectionSlug !== "oracoes-outras-tradicoes"
+  );
+  for (const p of list) {
     const colId = idsBySlug[p.collectionSlug];
     if (!colId) throw new Error(`Coleção ausente no mapa: ${p.collectionSlug}`);
 

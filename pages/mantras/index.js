@@ -65,7 +65,12 @@ export default function MantrasIndex({ items }) {
   );
 }
 
-export async function getServerSideProps() {
+/**
+ * Statically generate the list of mantras.  This avoids re‑running a database
+ * query on every request and dramatically improves page load times.  The
+ * `revalidate` option ensures the data is refreshed periodically.
+ */
+export async function getStaticProps() {
   await dbConnect();
   const docs = await Mantra.find({})
     .select("title slug excerpt cover createdAt updatedAt")
@@ -82,5 +87,5 @@ export async function getServerSideProps() {
     updatedAt: d.updatedAt?.toISOString?.() ?? null,
   }));
 
-  return { props: { items } };
+  return { props: { items }, revalidate: 3600 };
 }

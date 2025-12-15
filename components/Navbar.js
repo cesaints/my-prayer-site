@@ -105,15 +105,6 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* CTA desktop */}
-          <Link
-            href="/oracoes"
-            className="hidden lg:inline-flex items-center gap-2 rounded-xl px-4 py-2 font-semibold text-white no-underline border border-transparent shrink-0"
-            style={{ background: "linear-gradient(90deg,#8b5cf6,#22d3ee)" }}
-          >
-            Explorar
-          </Link>
-
           {/* Toggle mobile (sempre visível, sem corte) */}
           <button
             onClick={() => setOpen((v) => !v)}
