@@ -6,7 +6,7 @@ import Prayer from "../../models/Prayer";
 import FeaturedCollectionCard from "../../components/FeaturedCollectionCard";
 
 // Convert server-side rendering to static generation with incremental revalidation.
-// This improves performance by pre‑building the collections page at build time
+// This improves performance by pre-building the collections page at build time
 // and revalidating the data on a regular interval.  See `getStaticProps` below.
 
 export default function CollectionsPage({ collections = [], error = "" }) {
@@ -16,40 +16,41 @@ export default function CollectionsPage({ collections = [], error = "" }) {
         <title>Coleções | Portal de Orações</title>
       </Head>
 
-      <section className="container-max pt-10 md:pt-14">
-        <div className="mb-6 md:mb-8">
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">
-            Coleções
-          </h1>
-          <p className="mt-2 text-white/70">
-            Escolha um tema e explore orações curadas.
-          </p>
-        </div>
+      <section className="section">
+        <div className="container-max">
+          {/* Título/subtítulo centralizados (padrão Mantras/Salmos) */}
+          <header className="text-center mb-8">
+            <h1 className="title-xl">Coleções</h1>
+            <p className="subtitle mt-2">
+              Escolha um tema e explore orações curadas.
+            </p>
+          </header>
 
-        {error && (
-          <div className="mb-6 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-200">
-            Erro ao carregar coleções: {error}
+          {error && (
+            <div className="mb-6 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-700">
+              Erro ao carregar coleções: {error}
+            </div>
+          )}
+
+          {/* grid responsiva 1→N colunas */}
+          <div
+            className="grid gap-4 sm:gap-5 lg:gap-6"
+            style={{
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(min(100%, 240px), 1fr))",
+            }}
+          >
+            {collections.map((c) => (
+              <FeaturedCollectionCard
+                key={c.slug}
+                slug={c.slug}
+                name={c.name}
+                description={c.description}
+                count={c.count}
+                cover={c.cover}
+              />
+            ))}
           </div>
-        )}
-
-        {/* grid responsiva 1→N colunas */}
-        <div
-          className="grid gap-4 sm:gap-5 lg:gap-6"
-          style={{
-            gridTemplateColumns:
-              "repeat(auto-fit, minmax(min(100%, 240px), 1fr))",
-          }}
-        >
-          {collections.map((c) => (
-            <FeaturedCollectionCard
-              key={c.slug}
-              slug={c.slug}
-              name={c.name}
-              description={c.description}
-              count={c.count}
-              cover={c.cover}
-            />
-          ))}
         </div>
       </section>
     </>
@@ -68,8 +69,11 @@ export async function getStaticProps() {
     // Fetch all collections and prayer counts concurrently
     const [collections, counts] = await Promise.all([
       Collection.find({}).lean(),
-      Prayer.aggregate([{ $group: { _id: "$collection", total: { $sum: 1 } } }]),
+      Prayer.aggregate([
+        { $group: { _id: "$collection", total: { $sum: 1 } } },
+      ]),
     ]);
+
     const mapCount = new Map(counts.map((c) => [String(c._id), c.total]));
 
     const data = collections
