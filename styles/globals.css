@@ -5,25 +5,24 @@
 ======================= */
 @layer base {
   /*
-    Definições básicas de cores e tokens.  Nesta versão, o tema claro é o
-    padrão: tons claros nas superfícies e texto escuro.  Para usuários
-    que preferem o modo escuro, uma media query a seguir redefine
-    novamente as variáveis.
+    Tema ESCURO como padrão e FORÇADO em todos os dispositivos.
+    (Removemos prefers-color-scheme para não variar entre PC e celular.)
   */
   :root {
-    /* Cores (tema claro por padrão) */
-    --bg-1: #f9fafb;
-    --bg-2: #edf1f9;
-    --bg-3: #e7ebf5;
-    --ink: #0a0f1c;
-    --muted: #4a5568;
-    --accent: #7c3aed;
+    /* Cores (tema escuro por padrão) */
+    --bg-1: #0b1020;
+    --bg-2: #141a33;
+    --bg-3: #1a1f3a;
+    --ink: #e8ecff;
+    --muted: #b7c2e0;
+    --accent: #8b5cf6;
     --accent-2: #22d3ee;
-    --stroke: rgba(0, 0, 0, 0.12);
+    --stroke: rgba(255, 255, 255, 0.12);
 
     /* Altura fluida da navbar (mobile → desktop) */
     --nav-h: clamp(56px, 6.5svh, 88px);
   }
+
   @media (min-width: 768px) {
     :root {
       --nav-h: clamp(64px, 6svh, 96px);
@@ -34,33 +33,7 @@
   body {
     @apply h-full antialiased;
     color: var(--ink);
-    background: #f9fafb;
-  }
-
-  /* Dark theme: quando o usuário prefere esquema de cores escuro,
-     invertimos as variáveis para tons profundos e texto claro. */
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg-1: #0b1020;
-      --bg-2: #141a33;
-      --bg-3: #1a1f3a;
-      --ink: #e8ecff;
-      --muted: #b7c2e0;
-      --accent: #8b5cf6;
-      --accent-2: #22d3ee;
-      --stroke: rgba(255, 255, 255, 0.12);
-    }
-    html,
-    body {
-      background: #0a0f1c;
-      color: var(--ink);
-    }
-    a {
-      color: #9be8f5;
-    }
-    a:hover {
-      color: #e9d5ff;
-    }
+    background: #0a0f1c;
   }
 
   /* Offset global p/ navbar fixa + safe areas iOS */
@@ -183,7 +156,7 @@
         rgba(34, 211, 238, 0.22),
         transparent 60%
       ),
-      linear-gradient(180deg, #0b1020 0%, #0b1020 40%, #0b1020 100%);
+      linear-gradient(180deg, var(--bg-1) 0%, var(--bg-1) 40%, var(--bg-1) 100%);
   }
   .hero__inner {
     width: 100%;
